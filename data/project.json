@@ -1,0 +1,22 @@
+{
+    "cardlist": [
+        {
+            "id": "ori_001",
+            "expension": "original",
+            "name": "Colonier Training Camp",
+            "point": 2,
+            "cost": 8,
+            "type": "normal",
+            "condition": [
+                {"target": "Oxygen", "dir": "<=", "value": 5}
+            ],
+            "require" : [
+                {"target": "science", "dir": ">=", "value": 1}
+            ],
+            "tag": {
+                "Jupiter": 1,
+                "Steel": 1
+            }
+        }
+    ]
+}

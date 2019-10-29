@@ -1,0 +1,14 @@
+{
+    "cardlist": [
+        {
+            "id": "cpo_001",
+            "expension": "original",
+            "name": "Credicor",
+            "effect": {
+                "Start": "You start with 57 MC.",
+                "continue": "Effect: After you pay for a card or standard project with a basic cost of 20MC or more, you gain 4MC"
+            },
+            "capital": 57
+        }
+    ]
+}
