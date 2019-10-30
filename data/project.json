@@ -6,16 +6,38 @@
             "name": "Colonier Training Camp",
             "point": 2,
             "cost": 8,
-            "type": "normal",
+            "type": "automated",
             "condition": [
-                {"target": "Oxygen", "dir": "<=", "value": 5}
+                {"target": "oxygen", "inequality": "<=", "value": 5}
             ],
             "require" : [
-                {"target": "science", "dir": ">=", "value": 1}
+                {"target": "science", "inequality": ">=", "value": 1}
             ],
             "tag": {
-                "Jupiter": 1,
-                "Steel": 1
+                "jovian": 1,
+                "building": 1
+            }
+        },
+        {
+            "id": "ori_002",
+            "expension": "original",
+            "name": "Asteroid Mining Consortium",
+            "cost": 13,
+            "point": 1,
+            "type": "automated",
+            "tag": {
+                "jovian": 1
+            }
+        },
+        {
+            "id": "ori_003",
+            "expension": "original",
+            "name": "Depp Well Heating",
+            "cost": 13,
+            "type": "automated",
+            "tag": {
+                "power": 1,
+                "building": 1
             }
         }
     ]
