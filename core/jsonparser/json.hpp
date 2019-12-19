@@ -3,21 +3,21 @@
 #include <map>
 #include <vector>
 #include <string>
+#include <variant>
+
+using namespace std;
 
 namespace Json {
     class json {
     public:
-        std::vector<json> arr;
-        int val;
-        std::string str;
-        std::map<std::string, json> obj;
-
         json();
-        json operator[](std::string key);
-        json operator[](const char *key);
-        json operator[](int key);
+        static json parse(const string s);
+
+        json &operator[](const string key);
+        json &operator[](const char *const key);
+        json &operator[](const int key);
         operator int();
-        operator std::string();
+        operator string();
+        variant<monostate, vector<json>, int, string, map<string, json>> content;
     };
-    json parse(std::string s);
 }

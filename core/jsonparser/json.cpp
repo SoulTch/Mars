@@ -1,35 +1,36 @@
 #include "json.hpp"
 
 using namespace Json;
+using namespace std;
 
 json::json() {
-    val = 0;
+
 }
 
-json json::operator[] (std::string key) {
-    return obj[key];
+json &json::operator[] (const string key) {
+    return get<map<string, json>>(content)[key];
 }
 
-json json::operator[] (const char *key) {
-    return obj[std::string(key)];
+json &json::operator[] (const char *const key) {
+    return get<map<string, json>>(content)[string(key)];
 }
 
-json json::operator[] (int key) {
-    return arr[key];
+json &json::operator[] (const int key) {
+    return get<vector<json>>(content)[key];
 }
 
 json::operator int() {
-    return val;
+    return get<int>(content);
 }
 
-json::operator std::string() {
-    return str;
+json::operator string() {
+    return get<string>(content);
 }
 
-std::string str;
-int idx;
+static string str;
+static int idx;
 
-void norm() {
+void norm() { 
     while(idx < str.size() and (str[idx] == ' ' or str[idx] == '\n' or str[idx] == '\t')) idx++;
 }
 
@@ -53,33 +54,44 @@ json parse() {
     char c = next();
     json ret;
     if (c == '{') {
+        ret.content = map<string, json>();
+        auto &ref = get<map<string, json>>(ret.content);
+
         require('{');
         while(true) {
-            std::string key = parse();
+            string key = parse();
             require(':');
             json val = parse();
-            ret.obj[key] = val;
+            ref[key] = val;
 
             if (next() == ',') require(',');
             else break;
         }
         require('}');
     } else if (c == '[') {
+        ret.content = vector<json>();
+        auto &ref = get<vector<json>>(ret.content);
+
         require('[');
         while(true) {
-            ret.arr.push_back(parse());
+            ref.push_back(parse());
             if (next() == ',') require(',');
             else break;
         }
         require(']');
     } else if (c == '\"') {
+        ret.content = "";
+        auto &ref = get<string>(ret.content);
+
         require('\"');
-        while(next() != '\"') ret.str += require();
+        while(next() != '\"') ref += require();
         require('\"');
     } else if ('0' <= c and c <= '9') {
-        ret.val = 0;
+        ret.content = 0;
+        auto &ref = get<int>(ret.content);
+
         while('0' <= next() and next() <= '9') {
-            ret.val = 10*ret.val+require()-'0';
+            ref = 10*ref+require()-'0';
         }
     } else {
         assert(false);
@@ -87,7 +99,7 @@ json parse() {
     return ret;
 }
 
-json Json::parse(std::string s) {
+json json::parse(const string s) {
     str = s;
     idx = 0;
     return ::parse();
