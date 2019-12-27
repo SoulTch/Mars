@@ -13,7 +13,7 @@ namespace Json {
         json();
         static json parse(const string s);
 
-        json &operator[](const string key);
+        json &operator[](const string &key);
         json &operator[](const char *const key);
         json &operator[](const int key);
         operator int();

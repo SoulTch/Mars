@@ -8,17 +8,16 @@
             "cost": 8,
             "type": "automated",
             "condition": [
-                {"target": "oxygen", "inequality": "<=", "value": 5}
+                {"target": "oxygen", "inequality": ">=", "value": 3}
             ],
-            "require" : [
-                {"target": "science", "inequality": ">=", "value": 1}
+            "require": [
+                {"target": "science", "inequality": ">=", "value": 3}
             ],
             "tag": {
                 "jovian": 1,
                 "building": 1
             }
-        },
-        {
+        }, {
             "id": "ori_002",
             "expension": "original",
             "name": "Asteroid Mining Consortium",
@@ -28,8 +27,7 @@
             "tag": {
                 "jovian": 1
             }
-        },
-        {
+        }, {
             "id": "ori_003",
             "expension": "original",
             "name": "Depp Well Heating",
@@ -38,6 +36,32 @@
             "tag": {
                 "power": 1,
                 "building": 1
+            }
+        }, {
+            "id": "ori_004",
+            "expension": "original",
+            "name": "Cloud Seeding",
+            "cost": 11,
+            "type": "automated",
+            "condition": [
+                {"target": "ocean", "inequality": ">=", "value": 3}
+            ]
+        }, {
+            "id": "ori_005",
+            "expension": "original",
+            "name": "Search For Life",
+            "cost": 3,
+            "type": "automated",
+            "condition": [
+                {"target": "oxygen", "inequality": "<=", "value": 6}
+            ]
+        }, {
+            "id": "ori_006",
+            "expension": "Inventors' Guild",
+            "cost": 9,
+            "type": "active",
+            "tag": {
+                "science": 1
             }
         }
     ]

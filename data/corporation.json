@@ -5,10 +5,19 @@
             "expension": "original",
             "name": "Credicor",
             "effect": {
-                "Start": "You start with 57 MC.",
+                "start": "You start with 57 MC.",
                 "continue": "Effect: After you pay for a card or standard project with a basic cost of 20MC or more, you gain 4MC"
             },
             "capital": 57
+        }, {
+            "id": "cpo_002",
+            "expension": "original",
+            "name" : "ecoline",
+            "effect": {
+                "start": "You start with 2 plant production, 3 plants, and 36 MC.",
+                "continue": "Effect: You may always pay 7plants, instead of 8, to place greenery."
+            },
+            "capital": 36
         }
     ]
 }

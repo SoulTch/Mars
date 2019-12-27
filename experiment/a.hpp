@@ -1,8 +1,12 @@
-#pragma once
-#include <map>
-const std::map<int, int> m = {{1, 2}, {2, 3}};
 
-class Hello {
-public:
-    int doit() {return 2;}
-};
+#include <iostream>
+
+using namespace std;
+
+template<int N>
+void print() {
+    cout << N << endl;
+}
+
+void go1();
+void go2();

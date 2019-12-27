@@ -32,4 +32,6 @@ public:
     void generationBegin();
     bool generationEnd();
 
+
+    std::vector<EventHandler> eventHandler[GlobalSignal.COUNT];
 };

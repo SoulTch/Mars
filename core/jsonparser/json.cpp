@@ -7,7 +7,7 @@ json::json() {
 
 }
 
-json &json::operator[] (const string key) {
+json &json::operator[] (const string &key) {
     return get<map<string, json>>(content)[key];
 }
 
@@ -30,23 +30,23 @@ json::operator string() {
 static string str;
 static int idx;
 
-void norm() { 
+static void norm() { 
     while(idx < str.size() and (str[idx] == ' ' or str[idx] == '\n' or str[idx] == '\t')) idx++;
 }
 
-char next() {
+static char next() {
     norm();
     if (idx >= str.size()) return 0;
     return str[idx];
 }
 
-char require() {
+static char require() {
     norm();
     if (idx >= str.size()) return 0;
     return str[idx++];
 }
 
-void require(char c) {
+static void require(char c) {
     assert(require() == c);
 }
 

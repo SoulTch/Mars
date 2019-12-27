@@ -1,0 +1,33 @@
+{
+    "expension-set": "original",
+    "milestone" : [
+        "hello",
+        "world",
+        "wow"
+    ],
+    "award" : [
+        "hello",
+        "world",
+        "wow"
+    ],
+    "map" : [
+        ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"],
+        ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"],
+        ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"],
+        ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"],
+        ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"],
+        ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"],
+        ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"],
+        ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"],
+        ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
+    ],
+    "bonus" : {
+        "oxygen": ["None", "None", "None", "None", "None", "None", "None", "None", "None", "None", "None", "None", "None"],
+        "temperature": ["None", "None", "None", "None", "None", "None", "None", "None", "None", "None", "None", "None", "None", "None"],
+        "ocean": ["None", "None", "None", "None", "None", "None", "None", "None", "None", "None", "None", "None", "None"]
+    },
+    "deck-list" : [
+        "abs-123",
+        "abs-124"
+    ]
+}

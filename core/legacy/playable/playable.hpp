@@ -9,7 +9,7 @@ public:
     const std::string id;
     int tag[Tag.COUNT];
     int res[Counter.COUNT];
-    Power power;
+    std::vector<Task> tasks;
 };
 
 class Card : Playable {
@@ -17,7 +17,8 @@ public:
     const int cost;
     const int point;
     const ProjectType type;
-    
+    std::vector<Task> onLoad;
+
     Card(
         std::string id,
         int cost, 
@@ -54,4 +55,4 @@ public:
         }
         power.addTask(new ResourceGainTask(Resources.megacredit, capital));
     }
-};
+}; 
