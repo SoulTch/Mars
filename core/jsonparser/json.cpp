@@ -1,11 +1,8 @@
 #include "json.hpp"
+#include <sstream>
 
 using namespace Json;
 using namespace std;
-
-json::json() {
-
-}
 
 json &json::operator[] (const string &key) {
     return get<map<string, json>>(content)[key];
@@ -26,6 +23,38 @@ json::operator int() {
 json::operator string() {
     return get<string>(content);
 }
+
+string json::toJsonString() const {
+    return visit([](const auto &x) -> string {
+        using Type = decay_t<decltype(x)>;
+        ostringstream ret;
+        if constexpr(is_same_v<Type, string>) {
+            ret << '\"' << x << '\"';
+        } else if constexpr(is_same_v<Type, int>) {
+            ret << x;
+        } else if constexpr(is_same_v<Type, vector<json>>) {
+            ret << '[';
+            bool fst = true;
+            for (const json &t : x) {
+                ret << t.toJsonString() << (fst?"":",");
+                fst = false;
+            }
+            ret << ']';
+        } else if constexpr(is_same_v<Type, map<string, json>>) {
+            ret << '{';
+            bool fst = true;
+            for (const auto& [key, val] : x) {
+                ret << key << ':' << val.toJsonString() << (fst?"":",");
+                fst = false;
+            }
+            ret << '}';
+        } else {
+            assert(false);
+        }
+
+        return ret.str();
+    }, content);
+};
 
 static string str;
 static int idx;
@@ -104,3 +133,7 @@ json json::parse(const string s) {
     idx = 0;
     return ::parse();
 }
+
+
+
+int main(){}

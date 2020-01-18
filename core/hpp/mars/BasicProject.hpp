@@ -7,8 +7,7 @@ using namespace MarsCore;
 
 class BasicProject : public Entity {
 public:
-    int price, pid;
-    BasicProject(int pid) : pid(pid) { }
+    BasicProject(int, int);
 
     virtual bool available();
     virtual void play() = 0;
@@ -16,57 +15,41 @@ public:
 
 class SellPatentProject : public BasicProject {
 public:
-    SellPatentProject(int pid) : BasicProject(pid) { 
-        price = 1;
-    }
-
+    SellPatentProject(int);
     bool available() override;
     void play() override;
 };
 
 class PowerPlantProject : public BasicProject {
 public:
-    PowerPlantProject() : BasicProject(pid) { 
-        price = 11;
-    }
+    PowerPlantProject(int);
     void play() override;
 };
 
 class AsteroidProject : public BasicProject {
 public:
-    AsteroidProject() : BasicProject(pid) { 
-        price = 14;
-    }
+    AsteroidProject(int);
     bool available() override;
     void play() override;
 };
 
 class AquiferProject : public BasicProject {
 public:
-    AquiferProject() : BasicProject(pid) { 
-        price = 18;
-    }
-
+    AquiferProject(int);
     bool available() override;
     void play() override;
 };
 
 class GreeneryProject : public BasicProject {
 public:
-    GreeneryProject() : BasicProject(pid) { 
-        price = 23;
-    }
-
+    GreeneryProject(int);
     bool available() override;
     void play() override;
 };
 
 class CityProject : public BasicProject {
 public:
-    CityProject() : BasicProject(pid) { 
-        price = 25;
-    }
-
+    CityProject(int);
     bool available() override;
     void play() override;
 };

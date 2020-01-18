@@ -6,7 +6,8 @@ enum class Resources {
     Titanium,
     Plant,
     Electricity,
-    Heat
+    Heat,
+    COUNT
 };
 
 enum class ResourcesCounter {

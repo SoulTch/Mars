@@ -1,22 +1,18 @@
 #pragma once
 
-#include <any>
 #include <functional>
 
 using namespace std;
 
 namespace MarsCore {
 
-enum class GlobalEvent {
+enum class Event {
     // Generation Event
     StartGame,
     FinishGame,
     GenerationBegin,
     GenerationEnd,
-    COUNT
-};
 
-enum class Event {
     // Turn Event
     ActionDone,
     TurnBegin,
@@ -29,69 +25,63 @@ enum class Event {
     COUNT
 };
 
-template<typename... V>
 class EventHandler {
 public:
-    void addPrivateHandler(int player, const function<bool(V...)> &h) {
-        priv[player].push_back(h);
+    template<typename T>
+    void addPrivateHandler(int player, const function<bool(T&)> &h) {
+        static_cast<Wrapper<T> *>(this)->addPrivateHandler(player, h);
     }
 
-    void addPublicHandler(const function<bool(int, V...)> &h) {
-        publ.push_back(h);
+    template<typename T>
+    void addPublicHandler(const function<bool(T&)> &h) {
+        static_cast<Wrapper<T> *>(this)->addPublicHandler(h);
     }
 
-    void invoke(int player, V... args) {
-        priv[player].remove_if([&](auto &x) {return not x(args);});
-        publ        .remove_if([&](auto &x) {return not x(player, args);});
+    template<typename T>
+    void invoke(const T &param) {
+        static_cast<Wrapper<T> *>(this)->invoke(player, param);
     }
 
-private:
-    list<function<bool(V...)>>      priv[MAX_PLAYER];
-    list<function<bool(int, V...)>> publ;
+    template<typename T>
+    class Wrapper : public EventHandler {
+    public:
+
+        void addPrivateHandler(int player, const function<bool(T&)> &h) {
+            priv[player].push_back(h);
+        }
+
+        void addPublicHandler(const function<bool(T&)> &h) {
+            publ.push_back(h);
+        }
+
+        
+        void invoke(const T &param) {
+            priv[param.player].remove_if([&](auto &x) {return not x(param);});
+            publ              .remove_if([&](auto &x) {return not x(param);});
+        }
+
+    private:
+        list<function<bool(T&)>> priv[MAX_PLAYER];
+        list<function<bool(T&)>> publ;    
+    };
 };
 
-template<typename... V>
-class GlobalEventHandler {
-public:
-    void addHandler(const function<bool(V...)> &h) {
-        publ.push_back(h);
-    }
 
-    void invoke(int player, V... args) {
-        publ.remove_if([&](auto &x) {return not x(args);});
-    }
-
-private:
-    list<function<bool(V...)>> publ;
-};
-
-extern any globalh[static_cast<int>(GlobalEvent::COUNT)];
-extern any handler[static_cast<int>(Event::COUNT)];
-
-template<Event T, typename... V>
-void addPrivateEventListener(int player, const function<bool(V...)>& handler) {
-    any_cast<EventHandler<V...>>(handler[static_cast<int>(T)]).addPrivateHandler(handler);
+template<Event E, typename T>
+void addPrivateEventListener(int player, const function<bool(T&)>& handler) {
+    static_cast<EventHandler::Wrapper<T> &>(handler[static_cast<int>(E)]).addPrivateHandler(player, handler);
 }
 
-template<Event T, typename V>
-void addPublicEventListener(const function<bool(int, V...)>& handler) {
-    any_cast<EventHandler<V...>>(handler[static_cast<int>(T)]).addPublicHandler(handler);
+template<Event E, typename T>
+void addPublicEventListener(const function<bool(T&)>& handler) {
+    static_cast<EventHandler::Wrapper<T> &>(handler[static_cast<int>(E)]).addPublicHandler(handler);
 }
 
-template<Event T, typename... V>
-void invokeEvent(int player, V... args) {
-    any_cast<EventHandler<V...>>(handler[static_cast<int>(T)]).invoke(player, args);
+template<Event E, typename T>
+void invokeEvent(T &param) {
+    static_cast<EventHandler::Wrapper<T> &>(handler[static_cast<int>(E)]).invoke(param);
 }
 
-template<GlobalEvent T, typename... V>
-void addGlobalEventLietener(const function<bool(V...)>& handler) {
-    any_cast<GlobalEventHandler<V...>>(globalh[static_cast<int>(T)]).addHandler(handler);
-}
-
-template<GlobalEvent T, typename... V>
-void invokeGlobalEvent(V... args) {
-    any_cast<GlobalEventHandler<V...>>(globalh[static_cast<int>(T)]).invoke(args);
-}
-
+extern EventHandler *handler[static_cast<int>(Event::COUNT)];
 
 } // namespace MarsCore

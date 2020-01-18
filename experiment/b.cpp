@@ -1,10 +1,11 @@
 #include "a.hpp"
 
-void go2() {
-    print<1>();
+void doit(const char * s) {
+    A a;
+    a.go(1);
 }
 
-int main(void) {
-    go1();
-    go2();
+template<typename T>
+void A::go(T) {
+
 }

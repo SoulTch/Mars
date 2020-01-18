@@ -32,6 +32,7 @@ public:
 };
 
 class Board {
+public:
     int width, height;
     BoardTile tile[15][15];
 

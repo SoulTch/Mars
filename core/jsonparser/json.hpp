@@ -10,7 +10,6 @@ using namespace std;
 namespace Json {
     class json {
     public:
-        json();
         static json parse(const string s);
 
         json &operator[](const string &key);
@@ -18,6 +17,9 @@ namespace Json {
         json &operator[](const int key);
         operator int();
         operator string();
+        string toJsonString() const;
+
+
         variant<monostate, vector<json>, int, string, map<string, json>> content;
     };
 }

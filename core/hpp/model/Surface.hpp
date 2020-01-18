@@ -17,8 +17,6 @@ public:
     int level[inds];
     int goal [inds];
 
-    template<Indicator ind>
-    bool improvable() {
-        return level[ind] < goal[ind];
-    }
+    bool improvable(Indicator indtype);
+    void improve(Indicator indtype, int promoter);
 };

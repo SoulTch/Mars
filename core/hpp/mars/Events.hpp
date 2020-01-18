@@ -1,22 +1,31 @@
 #pragma once
 
-// Game generation events
-void startGame();
-void finishGame();
+struct StartGameEvent {
+    int player;
+};
 
-void generationBegin();
-bool generationEnd();
+struct FinishGameEvent {
+    int player;
+};
 
-bool doAction(int); 
-void actionDone(int);
+struct GenerationBeginEvent {
+    int player;
+};
 
-void turnBegin(int);
-void turnEnd(int, bool); 
+struct GenerationEndEvent {
+    int player;
+};
+
+struct ActionDoneEvent {
+    int player;
+};
+
+struct TurnBeginEvent {
+    int player;
+};
+
+struct TurnEndEvent {
+    int player;
+};
 
 
-
-// Card Events
-void drawCard();
-void addCard();
-void removeCard();
-void playCard();

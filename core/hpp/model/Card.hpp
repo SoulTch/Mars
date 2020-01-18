@@ -56,13 +56,6 @@ public:
 
 }; // class CardArche
 
-
-
-
-
-
-
-
 class Card {
 public:
     string id;
@@ -80,6 +73,11 @@ class Project : public Card, public Entity {
 public:
     State state;
 };
+
+
+
+
+
 
 } // namespace MarsCore
 

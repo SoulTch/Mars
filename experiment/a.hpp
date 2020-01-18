@@ -1,12 +1,7 @@
-
+#pragma once
 #include <iostream>
 
-using namespace std;
-
-template<int N>
-void print() {
-    cout << N << endl;
+template<typename T>
+namespace a {
+    int b;
 }
-
-void go1();
-void go2();

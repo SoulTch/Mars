@@ -16,33 +16,16 @@ enum class EntityType {
 
 class Entity {
 public:
+    int id;
     EntityType entity_type;
     EnabledEnchant enableEnchant(Enchantment *pt);
     void disableEnchant(EnabledEnchant it);
 
 private:
+    static int _id;
     std::list<Enchantment *> enchants;
     std::list<Enchantment *> aura;
 }; // class Entity
 
-
-template<typename... T>
-class Task {
-public:
-    function<void(T)> activate;
-    function<bool(T)> available;
-    function<void(T)> play;
-};
-
-template<typename T>
-class Power {
-public:
-    vector<function<void(T)>> activate;
-    vector<function<bool(T)>> available;
-    vector<function<void(T)>> play;
-
-    void addTask(const Task &);
-    void clear();
-};
 
 } // namespace MarsCore
