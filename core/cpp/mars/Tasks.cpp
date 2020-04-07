@@ -1,5 +1,12 @@
 
-#include <core/hpp/mars/CardLoader.hpp>
+#include <core/hpp/model/Tasks.hpp>
 
-using namespace std;
-using namespace MarsCore;
+namespace MarsCore {
+
+bool Activatable::available() {
+    return is_avail;
+}
+
+void Activatable::set_validity(bool flag) {
+    is_avail = flag;
+}

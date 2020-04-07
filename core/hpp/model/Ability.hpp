@@ -1,58 +1,55 @@
 #pragma once
 
 #include <core/hpp/model/Entity.hpp>
+#include <core/hpp/model/Log.hpp>
+#include <functional>
 
-using namespace std;
-using namespace MarsCore;
+namespace MarsCore {
 
-class Ability {
+enum class AbilityType {
+    PlayCard,
+    Standard,
+    Milestore,
+    Award,
+    Greenery,
+    Temperature,
+    Instant,
+    COUNT
+};
+
+
+class Activatable {
 public:
-    virtual bool available() = 0;
-    virtual int play() = 0;
+    int owner;
+    AbilityType type;
+    bool available();
+    void set_validity(bool);
+
+    virtual void revalidate() = 0;
+    virtual void run(Log *l) = 0;
+
+private:
+    bool is_avail = false;
 };
 
-class PlayCardAbility : public Ability {
-    Project *target;
-    bool available() override;
-    int play() override;
+class InstantAbility : public Activatable {
+public:
+    std::function<bool(int)> _reval;
+    std::function<void(int, Log *)> _run;
+
+    InstantAbility(std::function<bool(int)> _reval, std::function<void(int, Log *)> _run);
+
+    void revalidate() override;
+    void run(Log *) override;
 };
 
-class PersistActionAbility : public Ability {
-    Card *target;
-    Power task;
+class AbilityGroup : public std::list<Activatable *> {
+public:
+    void refresh(int);
 
-    bool available() override;
-    int play() override;
+private:
+    int era = -1;
 };
 
-class InstantAbility : public Ability {
-    bool available() override;
-    int play() override;
-};
 
-class BasicProjectAbility : public Ability {
-    BasicProject *target;
-
-    bool available() override;
-    int play() override;
-};
-
-class GreeneryAbility : public Ability {
-    bool available() override;
-    int play() override;
-};
-
-class WarmingAbility : public Ability {
-    bool available() override;
-    int play() override;
-};
-
-class FundAwardAbility : public Ability {
-    bool available() override;
-    int play() override;
-};
-
-class MilestoneAbility : public Ability {
-    bool available() override;
-    int play() override;
-};
+}

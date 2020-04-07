@@ -16,12 +16,19 @@ enum class Event {
     // Turn Event
     ActionDone,
     TurnBegin,
+    TurnActionEnd,
     TurnEnd,
 
-    DrawCardEvent,
-    AddCardEvent,
-    ActionEndEvent,
-    TurnEndEvent,
+    AddCard,
+    RemoveCard,
+    PlayCard,
+
+    IncTerraforming,
+    AddResources,
+    SubResources,
+    IncProduction,
+    DecProduction,
+
     COUNT
 };
 
@@ -78,10 +85,11 @@ void addPublicEventListener(const function<bool(T&)>& handler) {
 }
 
 template<Event E, typename T>
-void invokeEvent(T &param) {
+void invokeEvent(const T &param) {
     static_cast<EventHandler::Wrapper<T> &>(handler[static_cast<int>(E)]).invoke(param);
 }
 
 extern EventHandler *handler[static_cast<int>(Event::COUNT)];
 
 } // namespace MarsCore
+

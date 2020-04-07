@@ -3,6 +3,7 @@
 
 #include <core/hpp/mars/Game.hpp>
 #include <core/hpp/mars/Events.hpp>
+#include <core/hpp/mars/Interface.hpp>
 
 using namespace MarsCore;
 
@@ -12,8 +13,8 @@ int generation;
 MarsCore::Player player[MAX_PLAYER];
 map<string, MarsCore::CorpArche> corpPool;
 map<string, MarsCore::CardArche> cardPool;
-vector<MarsCore::Card *> projectDeck;
-vector<MarsCore::Card *> discardedDeck;
+vector<MarsCore::Project *> projectDeck;
+vector<MarsCore::Project *> discardedDeck;
 
 void loadCard() {
 

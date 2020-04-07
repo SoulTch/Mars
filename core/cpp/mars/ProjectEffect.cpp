@@ -5,12 +5,12 @@
 #include <core/hpp/mars/CardLoader.hpp>
 #include <core/hpp/mars/Tasks.hpp>
 
-map<string, Power> loadProjectPower() {
-    map<string, Power> m;
-    map<string, Power> p;
+void loadProjectPower() {
+    map<string, Power<Project>> m;
+    map<string, Power<Entity>> p;
 
-    Power power;
-    Power ____p;
+    Power<Project> power;
+    Power<Project> ____p;
 
 
     power.clear();
@@ -18,20 +18,20 @@ map<string, Power> loadProjectPower() {
 
     
     power.clear();
-    power.addTask(needProductionTask(Resources::Titanium, 1));
-    power.addTask(decAnyProductionTask(Resources::Titanium, 1));
-    power.addTask(incProductionTask(Resources::Titanium, 1));
+    power.addTask(needProductionTask<Project>(Resources::Titanium, 1));
+    power.addTask(decAnyProductionTask<Project>(Resources::Titanium, 1));
+    power.addTask(incProductionTask<Project>(Resources::Titanium, 1));
     m.emplace("ori-002", power);
 
     power.clear();
-    power.addTask(incProductionTask(Resources::Electricity, 1));
+    power.addTask(incProductionTask<Project>(Resources::Electricity, 1));
     power.addTask(incTemperatureTask());
     m.emplace("ori-003", power);
 
     power.clear();
-    power.addTask(decProductionTask(Resources::Megacredit, 1));
-    power.addTask(decAnyProductionTask(Resources::Heat, 1));
-    power.addTask(incProductionTask(Resources::Plant, 2));
+    power.addTask(decProductionTask<Project>(Resources::Megacredit, 1));
+    power.addTask(decAnyProductionTask<Project>(Resources::Heat, 1));
+    power.addTask(incProductionTask<Project>(Resources::Plant, 2));
     m.emplace("ori-004", power);
 
     power.clear();
@@ -39,7 +39,7 @@ map<string, Power> loadProjectPower() {
     ____p.addTask(paymentTask(Resources::Megacredit, 1));
     ____p.addTask({
         nullopt,
-        [](const Activate &act){
+        [](const Activate<Project> &act){
             Card *v = getCard();
             if (v->tag[static_cast<int>(Tag::Microbe)] > 0) {
                 

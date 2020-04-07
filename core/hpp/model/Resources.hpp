@@ -1,5 +1,7 @@
 #pragma once
 
+namespace MarsCore {
+
 enum class Resources {
     Megacredit,
     Steel,
@@ -10,8 +12,11 @@ enum class Resources {
     COUNT
 };
 
-enum class ResourcesCounter {
+enum class StackResources {
+    None,
     Science,
     Animal,
     
 };
+
+}

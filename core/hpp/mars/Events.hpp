@@ -1,31 +1,23 @@
 #pragma once
 
-struct StartGameEvent {
+struct SimpleEvent {
     int player;
 };
 
-struct FinishGameEvent {
+struct CardEvent {
     int player;
+    vector<Project *> const *cards;
 };
 
-struct GenerationBeginEvent {
+struct PlayCardEvent {
     int player;
+    bool isCorp;
+    Card * card;
 };
 
-struct GenerationEndEvent {
+struct ResourcesEvent {
     int player;
+    int target;
+    Resources restype;
+    int amount;
 };
-
-struct ActionDoneEvent {
-    int player;
-};
-
-struct TurnBeginEvent {
-    int player;
-};
-
-struct TurnEndEvent {
-    int player;
-};
-
-

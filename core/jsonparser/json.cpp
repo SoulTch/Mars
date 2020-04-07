@@ -4,12 +4,8 @@
 using namespace Json;
 using namespace std;
 
-json &json::operator[] (const string &key) {
+json &json::operator[] (const string key) {
     return get<map<string, json>>(content)[key];
-}
-
-json &json::operator[] (const char *const key) {
-    return get<map<string, json>>(content)[string(key)];
 }
 
 json &json::operator[] (const int key) {
@@ -133,7 +129,3 @@ json json::parse(const string s) {
     idx = 0;
     return ::parse();
 }
-
-
-
-int main(){}

@@ -24,21 +24,21 @@ V getv(T &v) {
     }
 }
 
-template<typename T> 
-Task drawCardTask(T &&amount) {
+template<typename A, typename T> 
+Task<A> drawCardTask(T &&amount) {
     return {
         nullopt,
-        [=](const Activate &act) {
+        [=](const Activate<A> &act) {
             player[act.player].drawcard(getv<int>(amount));
         }
     };
 }
 
-template<typename T>
-Task shopCardTask(T &&amount) {
+template<typename A, typename T>
+Task<A> shopCardTask(T &&amount) {
     return {
         nullopt,
-        [=](const Activate &act) {
+        [=](const Activate<A> &act) {
             player[act.player].drawcard(getv<int>(amount));
         }
     };
@@ -57,10 +57,10 @@ Task placeCityTask();
 Task placeGreeneryTask();
 
 // Production Task
-template<typename T>
-Task needProductionTask(Resources r, T &&func) {
+template<typename A, typename T>
+Task<A> needProductionTask(Resources r, T &&func) {
     return {
-        [=](const Activate &act) {
+        [=](const Activate<A> &act) {
             if constexpr (is_same_v<int, decay_t<T>>) {
                 return player[act.player].production[static_cast<int>(r)] >= func;
             } else {
@@ -71,38 +71,38 @@ Task needProductionTask(Resources r, T &&func) {
     };
 };
 
-template<typename T>
-Task decAnyProductionTask(Resources r, T &&func) {
+template<typename A, typename T>
+Task<A> decAnyProductionTask(Resources r, T &&func) {
     return {
-        [=](const Activate &act) {
+        [=](const Activate<A> &act) {
             int need = getv<int>(amount);
             return any_of(player, player+numOfPlayers, [](const auto &p) {
                 return func(p.production[static_cast<int>(r)]);
             });
         },
-        [=](const Activate &act) {
+        [=](const Activate<A> &act) {
 
         }
     };
 }
 
-template<typename T>
-Task incProductionTask(Resources r, T &&amount) {
+template<typename A, typename T>
+Task<A> incProductionTask(Resources r, T &&amount) {
     return {
         nullopt,
-        [=](const Activate &act) {
+        [=](const Activate<A> &act) {
             player[act.player].incProduction(r, getv<int>(amount));
         }
     };
 }
 
-template<typename T>
-Task decProductionTask(Resources r, T &&amount) {
+template<typename A, typename T>
+Task<A> decProductionTask(Resources r, T &&amount) {
     return {
-        [=](const Activate &act) {
+        [=](const Activate<A> &act) {
             return r == Resources::Megacredit or getv<int>(amount) <= player[act.player].production[static_cast<int>(r)];
         },
-        [=](const Activate &act) {
+        [=](const Activate<A> &act) {
             player[act.player].decProduction(r, getv<int>(amount));
         }
     }
@@ -111,19 +111,20 @@ Task decProductionTask(Resources r, T &&amount) {
 // Resources Task
 Task paymentTask(Resources, int);
 
-template<typename T>
-Task addResourcesTask(Resources r, T &&amount) {
+template<typename A, typename T>
+Task<A> addResourcesTask(Resources r, T &&amount) {
     return {
         nullopt,
-        [=](const Activate &act) {
+        [=](const Activate<A> &act) {
             player[act.player].addResources(r, getv<int>(amount));
         }
     };
 }
+
+
 Task subAnyResourcesTask(Resources, int);
 
 // Project Resources Task
 Task addProjectResourcesTask(ResourcesCounter, bool, int);
 
 // Special Task
-/* ori-006 */ 

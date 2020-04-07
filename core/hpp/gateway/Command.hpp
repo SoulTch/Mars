@@ -21,13 +21,14 @@
 using namespace std;
 using namespace MarsCore;
 
-Ability *chooseAbility(int, vector<Ability *> &);
+Activatable *chooseAbility(int, vector<Activatable *> &);
 
 vector<Card *> chooseHandCommand(int, int);
 
 vector<Payment *> choosePaymendCommand(int, vector<Payment *> &);
 vector<Card *> chooseHandCommand(int, int, int, vector<Card *> &);
-vector<Entity *> chooseEntityCommand(int, vector<Entity *> &);
+
+vector<Entity<T> *> chooseEntityCommand(int, vector<Entity<T> *> &);
 vector<Tile *>   chooseTileCommand(int, int, int, vector<Tile *> &);
 vector<Card *> chooseCardCommand(int, int, int, vector<Card *> &);
 vector<Card *> purchaseCommand(int, vector<Card *> &);
@@ -37,6 +38,6 @@ int chooseSurfaceTaskCommand(int);
 int choosePlayerCommand(int);
 
 int removeResourcesCommand(int, int, int); // player, max, target
-int removeResourcesCounterCommand(int, int, Entity *);
+int removeResourcesCounterCommand(int, int, Card *);
 
 

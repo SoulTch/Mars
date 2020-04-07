@@ -2,21 +2,37 @@
 
 #include <vector>
 
-using namespace std;
+#include <core/hpp/model/Tasks.hpp>
+#include <core/hpp/model/Log.hpp>
 
-enum class Indicator {
+namespace MarsCore {
+
+enum class IndicatorType {
     Oxygen,
     Ocean,
     Temperature,
     COUNT
 };
 
-class Surface {
-public: 
-    static const int inds = static_cast<int>(Indicator::COUNT);
-    int level[inds];
-    int goal [inds];
+class Indicator {
+public:
+    bool improvable();
+    void improve(int, Log *);
+    int needLevel(int);
+    std::vector<Power<int>> bonus;
 
-    bool improvable(Indicator indtype);
-    void improve(Indicator indtype, int promoter);
+    bool acquired;
+    bool activated;
+    int initLevel;
+    int maxLevel;
+    int curLevel;
+    int unitLevel;
 };
+
+class Surface {
+public:
+    Indicator *indicates[static_cast<int>(IndicatorType::COUNT)];
+    bool isFinished();
+};
+
+}
