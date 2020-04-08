@@ -5,7 +5,7 @@
 #include <thread>
 #include <shared_mutex>
 
-#include <core/hpp/gateway/Gateway.hpp>
+#include <core/hpp/gateway/Communication.hpp>
 
 using namespace Gateway;
 using namespace std;
@@ -50,6 +50,7 @@ void responsor();
 void initGateway(int reponseThreadCount) {
     critical.lock();
     thread t1(reader);
+
     t1.detach();
 
     for (int i = 0; i < reponseThreadCount; i++) {
