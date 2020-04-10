@@ -1,13 +1,15 @@
 #include <fstream>
+#include <nlohmann/json.hpp>
 
 #include <core/hpp/mars/CardLoader.hpp>
 
-#include <core/jsonparser/json.hpp>
 
 using namespace std;
+using namespace MarsCore;
+using json = nlohmann::json;
 
 
-Json::json loadJson(const string &filename) {
+json loadJson(const string &filename) {
     ifstream in(filename);
     assert(in);
 
@@ -18,34 +20,32 @@ Json::json loadJson(const string &filename) {
     string contents(0, len);
     in.read(&contents[0], len);
 
-    return Json::json::parse(contents);
+    return json::parse(contents);
 }
 
 
 
-map<string, MarsCore::CorpArche> LoadCorporation(string filename) {
-    Json::json corp = loadJson(filename);
+map<string, CorpArche> LoadCorporation(string filename) {
+    json corp = loadJson(filename);
 
-    auto &x = get<map<string, Json::json>>(corp.content);
-    map<string, MarsCore::CorpArche> ret;
+    map<string, CorpArche> ret;
     auto effect = loadCorporationPower();
 
-    for (auto [id, content] : x) {
-        ret[id] = MarsCore::CorpArche();
+    for (auto &[id, content] : corp["cardlist"].items()) {
+       	ret.emplace(id, CorpArche(id, content, effect[id]));
     }
 
     return ret;
 }
 
-map<string, MarsCore::CardArche> LoadProject(string filename) {
-    Json::json proj = loadJson(filename);
+map<string, CardArche> LoadProject(string filename) {
+    json proj = loadJson(filename);
 
-    auto &x = get<map<string, Json::json>>(proj.content);
-    map<string, MarsCore::CardArche> ret;
+    map<string, CardArche> ret;
+	auto effect = loadProjectPower();
 
-    for (auto [id, content]: x) {
-        ret[id] = MarsCore::CardArche();
-
+    for (auto &[id, content]: proj["cardlist"].items()) {
+		ret.emplace(id, ProjectArche(id, content, effect[id]));
     }
 
     return ret;

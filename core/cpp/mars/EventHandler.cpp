@@ -6,4 +6,4 @@
 using namespace MarsCore;
 using namespace std;
 
-EventHandler *handler[static_cast<int>(Event::COUNT)];
+EventHandler *MarsCore::handler[static_cast<int>(Event::COUNT)];

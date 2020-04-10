@@ -1,13 +1,11 @@
-#pragma once
-
 #include <functional>
 
 #include <core/hpp/mars/CardLoader.hpp>
 #include <core/hpp/mars/Tasks.hpp>
 
-void loadProjectPower() {
+map<string, Power<Project>> loadProjectPower() {
     map<string, Power<Project>> m;
-    map<string, Power<Entity>> p;
+    map<string, Power<PermanentAbility>> p;
 
     Power<Project> power;
     Power<Project> ____p;
@@ -16,7 +14,7 @@ void loadProjectPower() {
     power.clear();
     m.emplace("ori-001", power);
 
-    
+    /*
     power.clear();
     power.addTask(needProductionTask<Project>(Resources::Titanium, 1));
     power.addTask(decAnyProductionTask<Project>(Resources::Titanium, 1));
@@ -80,6 +78,7 @@ void loadProjectPower() {
     power.addTask(placeOceanTask());
     power.addTask(subAnyResourcesTask(Resources::Plant, 3));
     m.emplace("ori-010", power);
+	*/
 
     return m;
 }

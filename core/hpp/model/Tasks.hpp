@@ -19,16 +19,16 @@ template<typename T>
 class Power {
 public:
     void addTask(const Task<T> &v) {
-        if (v.available) addCondition(v.available);
-        if (v.play) addEffect(v.play);
+        if (v.available) addCondition(*(v.available));
+        if (v.play) addEffect(*(v.play));
     }
 
-    void addCondition(std::function<bool(T *)> &&v) {
-        _available.push_back(forward(v));
+    void addCondition(const std::function<bool(T *)> &v) {
+        _available.push_back(v);
     }
 
-    void addEffect(std::function<void(T *, Log *)> &&v) {
-        _play.push_back(forward(v));
+    void addEffect(const std::function<void(T *, Log *)> &v) {
+        _play.push_back(v);
     }
 
     void clear() {

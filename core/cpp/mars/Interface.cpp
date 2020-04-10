@@ -24,6 +24,7 @@ void generationBegin() {
 bool generationEnd() {
     SimpleEvent ev;
     MarsCore::invokeEvent<Event::GenerationEnd>(ev);
+	return false;
 }
 
 void actionDone(int player) {
@@ -147,8 +148,22 @@ void decProduction(int p, int target, Resources restype, int amount) {
     MarsCore::invokeEvent<Event::DecProduction>(ev);
 }
 
+bool doAction(int) {
+	return false;
+}
 
-void placeGreenery(int p);
-void placeOcean(int p);
-void placeCity(int p);
-void incTemperature(int p);
+void placeGreenery(int p) {
+
+}
+
+void placeOcean(int p) {
+
+}
+
+void placeCity(int p) {
+
+}
+
+void incTemperature(int p) {
+
+}

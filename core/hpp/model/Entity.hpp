@@ -4,72 +4,75 @@
 
 #pragma once
 #include <list>
+#include <functional>
+#include <string>
 
 namespace MarsCore {
 
 template<typename T>
 class Enchantment {
 public:
+	std::string detail;
     virtual void enable(T *) = 0;
 
-    template<typename V>
-    class Instance : public Enchantment<Instance<V>> {
-    public:
-        V obj;
-        Instance(V &&obj) : obj(obj) { }
-        void enable(T *arg) { obj(arg); }
-    };
+	Enchantment(const std::string& detail) : detail(detail) { }
+
+	virtual ~Enchantment() = default;
 };
+
+
 
 template<typename T>
 class Aura {
 public:
+	std::string detail;
     virtual void enable(T *) = 0;
     virtual void disable(T *) = 0;
 
-    template<typename U, typename V>
-    class Instance : public Aura<Instance<U, V>> {
-    public: 
-        U v1;
-        V v2;
-        Instance(U &&v1, V &&v2) : v1(v1), v2(v2) { }
-        void enable(T *arg) { v1(arg); }
-        void disable(T *arg) { v2(arg); }
-    };
+	Aura(const std::string& detail);
 };
 
 template<typename T>
 class Entity {
 public:
-    using Enabled = typename std::list<Enchantment<T> *>::iterator;
+	using EnabledEnchant = typename std::list<Enchantment<T> *>::iterator;
+    using EnabledAura = typename std::list<Aura<T> *>::iterator;
 
-    void enableEnchant(Enchantment<T> *pt) {
+    EnabledEnchant enableEnchant(Enchantment<T> *pt) {
         pt->enable(static_cast<T *>(this));
+		enchants.push_back(pt);
+		return std::prev(enchants.end());
     }
 
-    Enabled enableAura(Enchantment<T> *pt) {
+    EnabledAura enableAura(Aura<T> *pt) {
         pt->enable(static_cast<T *>(this));
-        return enchants.push_back(pt);
+        aura.push_back(pt);
+		return std::prev(aura.end());
     }
 
-    void disableAura(Enabled it) {
+    void disableAura(EnabledAura it) {
         *it->disable(static_cast<T *>(this));
         aura.erase(it);
     }
 
 private:
     std::list<Enchantment<T> *> enchants;
-    std::list<Enchantment<T> *> aura;
+    std::list<Aura<T> *> aura;
 }; // class Entity
 
 template<typename T>
 class Enchantable : public Entity<Enchantable<T>> {
 public:
-
-    Enchantable(T &&val) : val(val) { }
-    operator T() {
+    Enchantable(const T& val) : val(val) { }
+    Enchantable(T &&val) : val(std::move(val)) { }
+    operator T&() {
         return val;
     }
+
+	Enchantable<T> &operator=(const T& v) {
+		val = v;
+		return *this;
+	}
 private:
     T val;
 };

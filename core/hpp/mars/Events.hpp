@@ -1,18 +1,23 @@
 #pragma once
 
+#include <vector>
+
+#include <core/hpp/model/Card.hpp>
+
+namespace MarsCore {
+
 struct SimpleEvent {
     int player;
 };
 
 struct CardEvent {
     int player;
-    vector<Project *> const *cards;
+    std::vector<Project *> const *cards;
 };
 
-struct PlayCardEvent {
+struct PlayProjectEvent {
     int player;
-    bool isCorp;
-    Card * card;
+    Project *card;
 };
 
 struct ResourcesEvent {
@@ -21,3 +26,6 @@ struct ResourcesEvent {
     Resources restype;
     int amount;
 };
+
+
+}

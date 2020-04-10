@@ -9,13 +9,10 @@
 #include <core/hpp/model/Resources.hpp>
 #include <core/hpp/model/Tasks.hpp>
 
-using namespace std;
-using namespace MarsCore;
+std::map<std::string, MarsCore::CorpArche> loadCorporation(std::string filename);
+std::map<std::string, MarsCore::CardArche> loadProject(std::string filename);
 
-map<string, CorpArche> loadCorporation(string);
-map<string, CardArche> loadProject(string);
-
-map<string, Power> loadCorporationPower();
-map<string, Power> loadProjectPower();
-map<string, Power> loadActionPower();
+std::map<std::string, MarsCore::Power<MarsCore::Corporation>> loadCorporationPower();
+std::map<std::string, MarsCore::Power<MarsCore::Project>> loadProjectPower();
+std::map<std::string, MarsCore::Power<MarsCore::PermanentAbility>> loadActionPower();
 

@@ -13,7 +13,7 @@ namespace MarsCore {
 
 
 
-class Player : public Entity<Player> {
+class Player {
 public:
     struct Properties {
         Enchantable<int> cardCost = 3;
@@ -31,10 +31,10 @@ public:
         bool resourcesVuln = false;
     } properties;
 
-    Player(int);
 
     Corporation corporation;
     std::set<Project *> hand;
+	std::vector<std::string> enabledEffect;
 
     AbilityGroup abilities[static_cast<int>(AbilityType::COUNT)];
 
@@ -42,7 +42,8 @@ public:
     int tags[static_cast<int>(Tag::COUNT)];
     int resources[static_cast<int>(Resources::COUNT)];
     int production[static_cast<int>(Resources::COUNT)];
-    const int idx;
+    int idx;
+
 }; // class Player
 
 } // namespace MarsCore

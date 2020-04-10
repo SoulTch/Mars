@@ -5,6 +5,8 @@
 #include <functional>
 #include <map>
 
+#include <core/hpp/model/Point.hpp>
+
 #define MAX_SIZE 15
 #define MAX_PLAYER 5
 
@@ -35,6 +37,7 @@ class Tile {
 public:
     TileArche *type;
     int owner;
+	int x, y;
 };
 
 class Cell {
@@ -63,14 +66,16 @@ public:
 
     void init(int, int);
 
-    bool city_placeable(int);
-    bool tile_placeable(int);
+    bool city_placeable(int player);
+    bool tile_placeable(int player);
 
     bool placeable(int player, TileArche *tiletype);
 
     class Coordinate {
     public:
-        int r, c;    
+        int r, c;
+		Coordinate();
+		Coordinate(int r, int c);
     };
 
     std::vector<Coordinate> candidate(int player, TileArche *tiletype);

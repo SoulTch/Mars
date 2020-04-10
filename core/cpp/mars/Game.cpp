@@ -65,3 +65,11 @@ void start() {
 
     finishGame();
 }
+
+void reload() {
+	
+}
+
+int main(void) {
+	
+}

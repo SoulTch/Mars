@@ -27,7 +27,7 @@ void turnEnd(int, bool);
 
 // Action functions
 vector<Project *> seekCard(int amount);
-void addCard(int player, vector<Project *> &&);
+void addCard(int player, const vector<Project *> &);
 
 vector<Project *> selectCard();
 void removeCard(int player, const vector<Project *> &);

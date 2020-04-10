@@ -1,22 +1,38 @@
 #include <core/hpp/model/Card.hpp>
 #include <core/hpp/model/Ability.hpp>
 
-namespace MarsCore {
-    void Corporation::revalidate() {
-        set_validity(true);
-    }
+using namespace MarsCore;
+using namespace std;
 
-    void Corporation::run(Log *l) {
-        base.run(this, l);
-        power.run(this, l);
-    }
+CorpArche::CorpArche(const std::string &id, const json& arc, Power<Corporation> power) {
 
-    void Project::revalidate() {
-        set_validity(base.available(this) and power.available(this));
-    }
-
-    void Project::run(Log *l) {
-        base.run(this, l);
-        power.run(this, l);
-    }
 }
+
+Corporation::Corporation() { }
+Corporation::Corporation(CorpArche *arche) : arche(arche) { }
+
+void Corporation::revalidate() {
+    set_validity(true);
+}
+
+void Corporation::run(Log *l) {
+    arche->base.run(this, l);
+    arche->power.run(this, l);
+}
+
+Project::Project() { }
+Project::Project(ProjectArche *arche) : arche(arche) { }
+
+ProjectArche::ProjectArche(const std::string &id, const json &arc, Power<Project> power) {
+	
+}
+
+void Project::revalidate() {
+    set_validity(arche->base.available(this) and arche->power.available(this));
+}
+
+void Project::run(Log *l) {
+    arche->base.run(this, l);
+    arche->power.run(this, l);
+}
+

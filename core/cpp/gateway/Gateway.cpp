@@ -21,20 +21,23 @@ template<typename T>
 struct SynchronizedQueue {
     void push(T &&item) {
         mutex_.lock();
-        q.push(forward(item));
+        q.push(move(item));
         mutex_.unlock();
 
         cv.notify_one();
     }
 
     T pop() {
-        cv.wait(mutex_, []{q.size() > 0;});
+		unique_lock<mutex> lock(mutex_);
+        cv.wait(lock, [&]{return q.size() > 0;});
         T ret = q.front();
         q.pop();
-        mutex_.unlock();
+
+		lock.unlock();
 
         return ret;
     }
+
 private:
     queue<T> q;
     mutex mutex_;

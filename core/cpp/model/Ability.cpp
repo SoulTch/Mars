@@ -1,6 +1,6 @@
 #include <core/hpp/model/Ability.hpp>
 
-namespace MarsCore {
+using namespace MarsCore;
 
 bool Activatable::available() {
     return is_avail;
@@ -29,6 +29,4 @@ void InstantAbility::revalidate() {
 
 void InstantAbility::run(Log *l) {
     _run(owner, l);
-}
-
 }

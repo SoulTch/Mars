@@ -1,6 +1,6 @@
 #include <core/hpp/model/BoardTile.hpp>
 
-namespace MarsCore {
+using namespace MarsCore;
 
 void CellManager::init(int width, int height, Cell (&tile)[MAX_SIZE][MAX_SIZE]) {
     remain = 0;
@@ -24,7 +24,7 @@ bool CellManager::placeable() {
 void Board::init(int w, int h) {
     width = w;
     height = h;
-    for (int i = 0; i < numOfPlayers; i++) {
+    for (int i = 0; i < MAX_PLAYER; i++) {
         cities[i].init(width, height, tile);
         greens[i].init(width, height, tile);
     }
@@ -41,6 +41,9 @@ bool Board::tile_placeable(int player) {
 bool Board::placeable(int player, TileArche *tiletype) {
     return tiletype->placeable(player);
 }
+
+Board::Coordinate::Coordinate() { }
+Board::Coordinate::Coordinate(int r, int c) { }
 
 std::vector<Board::Coordinate> Board::candidate(int player, TileArche *tiletype) {
     std::vector<Board::Coordinate> ret;
