@@ -55,7 +55,7 @@ public:
     int startingMC;
     Power<Corporation> base, power;
 
-	CorpArche(const std::string& id, const json& arc, Power<Corporation> power);
+	CorpArche(const std::string& id, Power<Corporation> power);
 }; // class CorpArche
 
 class ProjectArche : public CardArche {
@@ -63,7 +63,7 @@ public:
     int cost;
     Power<Project> base, power;
 
-	ProjectArche(const std::string& id, const json& arc, Power<Project> power);
+	ProjectArche(const std::string& id, Power<Project> power);
 }; // class CardArche
 
 class Card : public Activatable {
@@ -80,8 +80,7 @@ public:
 
 	Corporation();
 	Corporation(CorpArche *);
-    void revalidate() override;
-    void run(Log *) override;
+    void run();
 };
 
 class Project : public Card, public Entity<Project> {
@@ -92,8 +91,8 @@ public:
 
 	Project();
 	Project(ProjectArche *);
-    void revalidate() override;
-    void run(Log *l) override;
+    void revalidate();
+    void run(json &l);
 };
 
 class PermanentAbility : public Activatable {
@@ -104,7 +103,7 @@ public:
     PermanentAbility(Card &target, Power<Card> &&power);
 
     void revalidate() override;
-    void run(Log *l) override;
+    void run(json &l) override;
 };
 
 

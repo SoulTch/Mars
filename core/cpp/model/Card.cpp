@@ -11,13 +11,9 @@ CorpArche::CorpArche(const std::string &id, const json& arc, Power<Corporation> 
 Corporation::Corporation() { }
 Corporation::Corporation(CorpArche *arche) : arche(arche) { }
 
-void Corporation::revalidate() {
-    set_validity(true);
-}
-
-void Corporation::run(Log *l) {
-    arche->base.run(this, l);
-    arche->power.run(this, l);
+void Corporation::run() {
+    arche->base.run(this, nullptr);
+    arche->power.run(this, nullptr);
 }
 
 Project::Project() { }
@@ -31,7 +27,7 @@ void Project::revalidate() {
     set_validity(arche->base.available(this) and arche->power.available(this));
 }
 
-void Project::run(Log *l) {
+void Project::run(json &l) {
     arche->base.run(this, l);
     arche->power.run(this, l);
 }

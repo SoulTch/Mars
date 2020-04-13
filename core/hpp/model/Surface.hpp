@@ -2,8 +2,9 @@
 
 #include <vector>
 
+#include <nlohmann/json.hpp>
+
 #include <core/hpp/model/Tasks.hpp>
-#include <core/hpp/model/Log.hpp>
 
 namespace MarsCore {
 
@@ -17,7 +18,7 @@ enum class IndicatorType {
 class Indicator {
 public:
     bool improvable();
-    void improve(int, Log *);
+    void improve(int, json &);
     int needLevel(int);
     std::vector<Power<int>> bonus;
 

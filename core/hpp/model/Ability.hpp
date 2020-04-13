@@ -1,8 +1,11 @@
 #pragma once
 
-#include <core/hpp/model/Entity.hpp>
-#include <core/hpp/model/Log.hpp>
 #include <functional>
+#include <nlohmann/json.hpp>
+
+#include <core/hpp/model/Entity.hpp>
+
+using json = nlohmann::json;
 
 namespace MarsCore {
 
@@ -26,7 +29,7 @@ public:
     void set_validity(bool);
 
     virtual void revalidate() = 0;
-    virtual void run(Log *l) = 0;
+    virtual void run(json &l) = 0;
 
 private:
     bool is_avail = false;
@@ -35,12 +38,12 @@ private:
 class InstantAbility : public Activatable {
 public:
     std::function<bool(int)> _reval;
-    std::function<void(int, Log *)> _run;
+    std::function<void(int, json &)> _run;
 
-    InstantAbility(std::function<bool(int)> _reval, std::function<void(int, Log *)> _run);
+    InstantAbility(std::function<bool(int)> _reval, std::function<void(int, json &)> _run);
 
     void revalidate() override;
-    void run(Log *) override;
+    void run(json &) override;
 };
 
 class AbilityGroup : public std::list<Activatable *> {

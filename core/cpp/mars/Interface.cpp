@@ -7,6 +7,9 @@
 using MarsCore::Event;
 
 void startGame() {
+	
+
+
     SimpleEvent ev;
     MarsCore::invokeEvent<Event::StartGame>(ev);
 }

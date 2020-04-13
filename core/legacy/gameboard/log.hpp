@@ -6,10 +6,10 @@
 class Log {
 public:
     virtual std::string to_string();
-    void append(Log *p);
+    void append(json &p);
     
 private:
-    std::vector<Log *> logs;
+    std::vector<json &> logs;
 };
 
 class DrawCardLog;

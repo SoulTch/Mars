@@ -4,7 +4,9 @@
 #include <optional>
 #include <functional>
 
-#include <core/hpp/model/Log.hpp>
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
 
 namespace MarsCore {
 
@@ -12,7 +14,7 @@ template<typename T>
 class Task {
 public:
     std::optional<std::function<bool(T *)>> available;
-    std::optional<std::function<void(T *, Log *)>> play;
+    std::optional<std::function<void(T *, json &)>> play;
 };
 
 template<typename T>
@@ -27,7 +29,7 @@ public:
         _available.push_back(v);
     }
 
-    void addEffect(const std::function<void(T *, Log *)> &v) {
+    void addEffect(const std::function<void(T *, json &)> &v) {
         _play.push_back(v);
     }
 
@@ -43,14 +45,14 @@ public:
         return true;
     }
 
-    void run(T *v, Log *l) {
+    void run(T *v, json &l) {
         for (auto &x : _play) {
             x(v, l);
         }
     }
 private:
     std::vector<std::function<bool(T *)>> _available;
-    std::vector<std::function<void(T *, Log *)>> _play;
+    std::vector<std::function<void(T *, json &)>> _play;
 };
 
 }

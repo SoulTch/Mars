@@ -17,7 +17,7 @@ map<string, Power<Corporation>> loadCorporationPower() {
     Power<Corporation> power;
 
     power.clear();
-    power.addEffect([](Corporation *p, Log *log) {
+    power.addEffect([](Corporation *p, json &log) {
         auto ev = [=](const PlayProjectEvent &ev) {
             Project *pr = ev.card;
             if (pr->arche->cost >= 20) {
@@ -30,7 +30,7 @@ map<string, Power<Corporation>> loadCorporationPower() {
     m.emplace("cor-001", power);
 
     power.clear();
-    power.addEffect([](Corporation *p, Log *log) {
+    power.addEffect([](Corporation *p, json &log) {
         player[p->owner].properties.regrowth.enableEnchant(
 			setEnchant<Enchantable<int>>("Regrowth", 7)
 		);

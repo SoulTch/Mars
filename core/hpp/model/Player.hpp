@@ -29,12 +29,13 @@ public:
 
         // others
         bool resourcesVuln = false;
+		bool startupFree = false;
     } properties;
 
 
-    Corporation corporation;
+    Corporation *corporation;
     std::set<Project *> hand;
-	std::vector<std::string> enabledEffect;
+	json enabledEffect;
 
     AbilityGroup abilities[static_cast<int>(AbilityType::COUNT)];
 

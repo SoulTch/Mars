@@ -7,7 +7,7 @@ bool Indicator::improvable() {
     return curLevel < maxLevel;
 }
 
-void Indicator::improve(int player, Log *l) {
+void Indicator::improve(int player, json &l) {
     curLevel += unitLevel;
     bonus[curLevel/unitLevel].run(&player, l);
 }

@@ -27,6 +27,6 @@ void InstantAbility::revalidate() {
     set_validity(_reval(owner));
 }
 
-void InstantAbility::run(Log *l) {
+void InstantAbility::run(json &l) {
     _run(owner, l);
 }
